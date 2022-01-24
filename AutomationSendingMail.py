@@ -11,11 +11,12 @@ from datetime import datetime, timedelta
 from seffaflik.elektrik import uretim
 
 class SendingMail:
-    def __init__(self,today,tomorrow,username,password):
+    def __init__(self,today,tomorrow,username,password,recipients):
         self.today = today
         self.tomorrow = tomorrow
         self.username = username
         self.password = password
+        self.recipients = recipients
 
     def eak_kgup(self):
         
@@ -416,7 +417,7 @@ class SendingMail:
     def send_mail(self):
         today2 = datetime.strftime(datetime.now(), '%d %B %Y')
         isTls=True
-        send_to = "enes.ozturk@nykenerji.com"
+        send_to = self.recipients
         subject = "{} KGÜP Raporları".format(today2)
         text = "Merhabalar,\n\n{} KGÜP raporları ektedir.\n\n".format(today2)
         server = SMTP('smtp.office365.com', 587)
@@ -425,7 +426,7 @@ class SendingMail:
         msg['To'] = send_to
         msg['Date'] = formatdate(localtime = True)
         msg['Subject'] = subject
-        msg['Cc'] = "toygar.ulgen@ozu.edu.tr"
+        #msg['Cc'] = "toygar.ulgen@ozu.edu.tr"
         msg.attach(MIMEText(text))
         
         filenames = ['MAX.pdf', 'MIN.pdf','Hydro1_KGUP.pdf', 'Hydro2_KGUP.pdf', 'Gas1_KGUP.pdf',
@@ -450,7 +451,7 @@ presentday = datetime.now()
 tomorrow = (presentday + timedelta(1)).strftime('%Y-%m-%d')
 today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
-lastresult=SendingMail(today,tomorrow,"toygar.ulgen@nykenerji.com","Vub83937")
+lastresult=SendingMail(today,tomorrow,"YourUsername","YourPassword","YourRecipients")
 lastresult.eak_kgup()
 lastresult.org_check()
 lastresult.send_mail()
