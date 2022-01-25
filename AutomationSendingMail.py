@@ -331,15 +331,6 @@ class SendingMail:
 
         maxx = toplamlar.sort_values(by='KGÜP',ascending=False).head(15)
         minn = toplamlar.sort_values(by='KGÜP',ascending=False).tail(15)
-        # EXPORTING PDF
-        fig, ax =plt.subplots(figsize=(3,1))
-        ax.axis('off')
-        the_table = ax.table(cellText = maxx.values, rowLabels = maxx.index, loc='center', colLabels = maxx.columns, cellLoc='center')
-        the_table.set_fontsize(8)
-        plt.savefig("MAX.pdf", format="pdf", bbox_inches = 'tight')
-        the_table = ax.table(cellText = minn.values, rowLabels = minn.index, loc='center', colLabels = minn.columns, cellLoc='center')
-        the_table.set_fontsize(8)
-        plt.savefig("MIN.pdf", format="pdf", bbox_inches = 'tight')
         
         # KGÜP RAPOR
         def dunbugunfark(string1):
